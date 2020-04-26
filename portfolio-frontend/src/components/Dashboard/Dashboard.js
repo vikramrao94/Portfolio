@@ -9,11 +9,6 @@ import { data } from '../../data/data';
 import DashboardTest from './DashboardTest';
 
 const styles = (theme) => ({
-  root: {
-    flexGrow: 1,
-    margin:'5%',
-    alignItems:'center'
-  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -54,11 +49,5 @@ class Dashboard extends Component {
     );
   }
 }
-
-// <div className={classes.root}>
-//   <Grid container spacing={3}>
-//     {this.renderContents()}
-//   </Grid>
-// </div>
 
 export default withStyles(styles)(Dashboard);
