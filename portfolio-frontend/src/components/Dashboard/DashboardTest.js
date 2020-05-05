@@ -83,7 +83,8 @@ const DashboardTest = (props) => {
 const Header = styled.div`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
-  background-color: red;
+  border-radius: 2em;
+  border: 0.1em solid red;
   margin-top: ${({ heightMargin }) => heightMargin}px;
   margin-bottom: ${({ heightMargin }) => heightMargin}px;
   margin-left: ${({ widthMargin }) => widthMargin}px;
@@ -92,11 +93,12 @@ const Header = styled.div`
 const Div = styled.div`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
+  border-radius: 2em;
+  border: 0.1em solid red;
   margin-top: ${({ heightMargin }) => heightMargin}px;
   margin-bottom: ${({ heightMargin }) => heightMargin}px;
   margin-left: ${({ widthMargin }) => widthMargin}px;
   margin-right: ${({ widthMargin }) => widthMargin}px;
-  background-color: blue;
   visibility: ${({ animate }) => (animate ? "visible" : "hidden")};
   opacity: ${({ animate }) => (animate ? 1 : 0)};
   transition: visibility 0s linear 0.33s, opacity 0.33s linear;
