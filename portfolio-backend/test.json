@@ -1,0 +1,44 @@
+{
+  "heading":{
+    "name":"Vikram Rao",
+    "phone":"+1 (407)-910-8680",
+    "email":"vikramrao512@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/vikramrao94706/",
+    "website": "https://www.vikramrao.me",
+    "github": "https://github.com/vikramrao94"
+  },
+  "executive_summary":[
+    "Highly adaptable software engineer and a generalist with a diverse tech stack from front-end to computer vision and back end development.",
+    "Proficient in leveraging web and cross platform development tools for mobile and desktop applications.",
+    "A divergent thinker with the temperament to assimilate recent technologies and frameworks. "
+  ],
+  "skills":[
+
+  ],
+  "experience":[
+    {
+      "company":"Devtech systems",
+      "dates":"March 2020 - Present",
+      "logo_url":"something",
+      "title":"Frontend Engineer",
+      "sub_title":null,
+      "summary":[
+        "Redesigned and overhauled the monitor software from the ground up.",
+        "Designed and implemented automatic local database (scanner image database and sqlite database) updates that are separate from app updates.",
+        "Created the search page UI for the website with integration to the backend for fetching the search results."
+      ]
+    },
+    {
+      "company":"Devtech systems",
+      "dates":"July 2018 - October 2019",
+      "logo_url":"something",
+      "title":"Full-stack Engineer",
+      "sub_title":"Co-Founder",
+      "summary":[
+        "Developed the scanning technology from scratch using the OpenCV framework with an accuracy of 95% over 15000 image artworks.",
+        "Integrated pricing API into the app for daily and automated pricing.",
+        "Developed a system for cloud storage that uploads and store user collection."
+      ]
+    }
+  ]
+}
