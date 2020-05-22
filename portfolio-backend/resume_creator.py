@@ -1,12 +1,14 @@
 import json
 from io import BytesIO
 from reportlab.lib.pagesizes import letter, A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, PageBreak, Spacer
+from reportlab.platypus import SimpleDocTemplate, Paragraph, PageBreak, Spacer, Table
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch, mm
 from reportlab.lib.colors import HexColor
+from PIL import Image
 
 from line_generator import MCLine
+from image import HyperlinkedImage
 
 MARGIN_VERTICAL = 10
 MARGIN_HORIZONTAL = 20
@@ -36,7 +38,7 @@ class Resume_Creator:
     def get_body_style(self,type,parameters):
         sample_style_sheet = getSampleStyleSheet();
         body_style = sample_style_sheet[type];
-        print(sample_style_sheet.list())
+        # print(sample_style_sheet.list())
         for key in parameters:
             if key == "fontSize":
                 body_style.fontSize = parameters[key]
@@ -83,7 +85,21 @@ class Resume_Creator:
         print("education")
 
     def add_header(self):
-        # self.generate_heading()
+        print(self.input["heading"])
+        # img = Image.open('images/linkedin.png')
+        name_style = self.get_body_style("Normal",{
+        "fontSize": 24,
+        "textColor": HexColor("#ff8100")
+        });
+        linkedin = HyperlinkedImage('images/linkedin.png', self.input["heading"]["linkedin"],30,30)
+        github = HyperlinkedImage('images/github.png', self.input["heading"]["github"],30,30)
+        table_data = [
+            [Paragraph("<b>%s</b>" % self.input["heading"]["name"], name_style)],
+            [Spacer(1, 10)],
+            [github, linkedin]
+        ]
+        table = Table(table_data)
+        self.data.append(table)
         print("header")
 
     def add_projects(self):
