@@ -5,7 +5,8 @@
     "email":"vikramrao512@gmail.com",
     "linkedin": "https://www.linkedin.com/in/vikramrao94706/",
     "website": "https://www.vikramrao.me",
-    "github": "https://github.com/vikramrao94"
+    "github": "https://github.com/vikramrao94",
+    "address":"Washington DC"
   },
   "executive_summary":[
     "Highly adaptable software engineer and a generalist with a diverse tech stack from front-end to computer vision and back end development.",
@@ -14,6 +15,24 @@
   ],
   "skills":[
 
+  ],
+  "education":[
+    {
+      "degree":"MS",
+      "course":"Computer Engineering",
+      "school":"University of Central Florida",
+      "location":"Orlando, FL, USA",
+      "duration":"August 2016 - May 2018",
+      "logo":"ucf.png"
+    },
+    {
+      "degree":"BS",
+      "course":"Electronics and Communication Engineering",
+      "school":"PSG College of Technology",
+      "location":"Coimbatore, TN, India",
+      "duration":"July 2012 - June 2016",
+      "logo":"psg.png"
+    }
   ],
   "experience":[
     {
