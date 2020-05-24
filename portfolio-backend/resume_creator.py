@@ -52,19 +52,25 @@ class Resume_Creator:
             body_style.leftIndent = self.bullet_properties["indent"];
         return body_style;
 
-    def generate_bullet_points(self, font_size, array):
+    def generate_bullet_points(self, font_size, array, table = None):
         body_style = self.get_body_style("Bullet",{
         "fontSize": font_size
         });
+        if table == True:
+            result = []
+            for point in array:
+                result.append(Paragraph(point, body_style, bulletText = self.bullet_properties["symbol"]))
+            return result
+
         for point in array:
             self.data.append(Paragraph(point, body_style, bulletText = self.bullet_properties["symbol"]));
 
-    def generate_range(self, date):
+    def generate_alignment_style(self, input, alignment, size):
         style = ParagraphStyle('Normal',
-                    alignment = TA_RIGHT,
-                    fontSize = 10.5
+                    alignment = alignment,
+                    fontSize = size
                     )
-        return Paragraph(date, style)
+        return Paragraph(input, style)
 
     def generate_heading(self, title):
         body_style = self.get_body_style("Normal",{
@@ -84,8 +90,50 @@ class Resume_Creator:
 
     def add_experience(self):
         self.generate_heading("<b>EXPERIENCE</b>")
-        # for experience in self.input["experience"]:
-        #     print("exp: ",json.dumps(experience))
+        word_style = self.get_body_style("Normal", {
+        "fontSize":10.5,
+        })
+        for experience in self.input["experience"]:
+            logo = [
+                [
+                HyperlinkedImage("images/" + experience["logo"],None, 20, 20)
+                ]
+            ]
+            heading = [
+                [
+                Paragraph(experience["title"],word_style),
+                Paragraph(experience["company"],word_style),
+                self.generate_alignment_style("<b>%s</b>"%experience["duration"], TA_RIGHT, 10.5)
+                ]
+            ]
+            summary = [
+                [
+                    self.generate_bullet_points(10.5, experience["summary"],True)
+                ]
+            ]
+            heading_table = Table(heading,[120,100,298])
+            summary_table = Table(summary)
+            combined_table = [
+                [
+                    heading_table,
+                    summary_table
+                ]
+            ]
+            logo_table = Table(logo)
+            main = [
+                [
+                logo_table,
+                combined_table
+                ]
+            ]
+            main_table = Table(main, [30, 530])
+            main_table_style = [
+                ('VALIGN', (0, 0), (0, 0), "MIDDLE"),
+            ]
+            main_table.setStyle(main_table_style)
+            self.data.append(main_table)
+
+        self.data.append(Spacer(1, 10))
         print("experience")
 
     def add_skills(self):
@@ -95,11 +143,9 @@ class Resume_Creator:
     def add_education(self):
         self.generate_heading("<b>EDUCATION</b>")
         for education in self.input["education"]:
-            print(education)
             word_style = self.get_body_style("Normal", {
             "fontSize":10.5,
             })
-            print(TA_RIGHT)
             duration_style = self.get_body_style("Normal", {
             "fontSize":10.5,
             "alignment":"right"
@@ -111,7 +157,7 @@ class Resume_Creator:
             ]
             degree = [[
                 Paragraph("<b>%s</b>"% education["degree"],word_style),
-                Paragraph("<i>%s</i>"%education["course"],word_style)
+                Paragraph("<i>%s</i>"% education["course"],word_style)
             ]]
             school = [[
                 Paragraph(education["school"],word_style),
@@ -122,13 +168,9 @@ class Resume_Creator:
                 [Table(degree, [30, 300])],
                 [Table(school, [150, 180])]
             ]
-            styles = ParagraphStyle('Normal',
-                            alignment = TA_RIGHT,
-                            fontSize = 10.5,
-                            fontName="Times-Roman")
             duration = [
                 [
-                    self.generate_range(education["duration"])
+                    self.generate_alignment_style("<b>%s</b>"%education["duration"], TA_RIGHT, 10.5)
                 ]
             ]
             logo_table = Table(logo)
@@ -170,7 +212,8 @@ class Resume_Creator:
         ]
         heading_table = Table(heading)
         heading_table_style = [
-            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('TEXTCOLOR', (0,0),(-1,0), HexColor("#ff8100"))
         ]
         heading_table.setStyle(heading_table_style)
         self.data.append(heading_table)
@@ -196,9 +239,9 @@ class Resume_Creator:
     def save_resume(self):
         self.add_header();
         self.add_summary();
+        self.add_experience();
         self.add_education();
         # self.add_skills();
-        # self.add_experience();
         self.doc.build(self.data);
         with open(self.file_name + ".pdf", "wb") as f:
             f.write(self.pdf_buffer.getbuffer())

@@ -37,10 +37,11 @@
   "experience":[
     {
       "company":"Devtech systems",
-      "dates":"March 2020 - Present",
-      "logo_url":"something",
+      "duration":"March 2020 - Present",
+      "logo":"devtech.png",
       "title":"Frontend Engineer",
       "sub_title":null,
+      "location":"Washington DC",
       "summary":[
         "Redesigned and overhauled the monitor software from the ground up.",
         "Designed and implemented automatic local database (scanner image database and sqlite database) updates that are separate from app updates.",
@@ -48,11 +49,12 @@
       ]
     },
     {
-      "company":"Devtech systems",
-      "dates":"July 2018 - October 2019",
-      "logo_url":"something",
+      "company":"Varathon",
+      "duration":"July 2018 - October 2019",
+      "logo":"yugipal.png",
       "title":"Full-stack Engineer",
       "sub_title":"Co-Founder",
+      "location":"Berkeley",
       "summary":[
         "Developed the scanning technology from scratch using the OpenCV framework with an accuracy of 95% over 15000 image artworks.",
         "Integrated pricing API into the app for daily and automated pricing.",
