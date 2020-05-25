@@ -14,7 +14,21 @@
     "A divergent thinker with the temperament to assimilate recent technologies and frameworks. "
   ],
   "skills":[
-
+    {
+      "key":"Programming languages",
+      "list":["C", "C++", "Swift", "Objective-C", "SQL", "Java", "HTML", "CSS", "Ruby"],
+      "most_used":["Javascript","Python"]
+    },
+    {
+      "key":"Web Development",
+      "list":["Ruby on Rails", "REST APIs", "Node.js", "Express", "Firebase", "AWS Lambda", "Flask", "GraphQL", "PostgreSQL"],
+      "most_used":["React","Redux", "REST APIs"]
+    },
+    {
+      "key":"Mobile Development",
+      "list":["XCode", "Android Studio", "SQLite"],
+      "most_used":["React Native"]
+    }
   ],
   "education":[
     {

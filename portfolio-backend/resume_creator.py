@@ -72,24 +72,36 @@ class Resume_Creator:
                     )
         return Paragraph(input, style)
 
-    def generate_heading(self, title):
+    def generate_heading(self, title, image):
         body_style = self.get_body_style("Normal",{
         "fontSize": 12,
         "textColor": HexColor("#ff8100")
         });
-        self.data.append(Paragraph(title, body_style));
+        heading = [
+            [
+                HyperlinkedImage("images/%s"%image,None, 20,20),
+                Paragraph(title, body_style)
+            ]
+        ]
+        heading_table = Table(heading, [30, 525])
+        heading_table.setStyle(
+            [
+                ('VALIGN', (0, 0), (-1, -1), "MIDDLE")
+            ]
+        )
+        self.data.append(heading_table,)
         self.data.append(Spacer(1, 5))
         line = MCLine(self.page_size[0] - (3.5 * MARGIN_HORIZONTAL), 0)
         self.data.append(line)
 
     def add_summary(self):
-        self.generate_heading("<b>EXECUTIVE SUMMARY</b>")
+        self.generate_heading("<b>EXECUTIVE SUMMARY</b>","summary.png")
         self.generate_bullet_points(10.5, self.input["executive_summary"])
         self.data.append(Spacer(1, 10))
         print("summary")
 
     def add_experience(self):
-        self.generate_heading("<b>EXPERIENCE</b>")
+        self.generate_heading("<b>EXPERIENCE</b>", "work.png")
         word_style = self.get_body_style("Normal", {
         "fontSize":10.5,
         })
@@ -137,11 +149,26 @@ class Resume_Creator:
         print("experience")
 
     def add_skills(self):
-        self.generate_heading("SKILLS")
+        self.generate_heading("<b>SKILLS</b>","code.png")
+        word_style = self.get_body_style("Normal", {
+        "fontSize":10.5,
+        })
+        points = []
+        for sub_skill in self.input["skills"]:
+            list = "<b>%s :</b> " % sub_skill["key"]
+            for skill in sub_skill["most_used"]:
+                list += "<i>%s</i>, " % skill
+            for skill in sub_skill["list"]:
+                list += "%s, " % skill
+            list = list[:-2]
+            points.append(list)
+
+        self.generate_bullet_points(10.5, points)
+        self.data.append(Spacer(1, 10))
         print("skills")
 
     def add_education(self):
-        self.generate_heading("<b>EDUCATION</b>")
+        self.generate_heading("<b>EDUCATION</b>","school.png")
         for education in self.input["education"]:
             word_style = self.get_body_style("Normal", {
             "fontSize":10.5,
@@ -190,6 +217,7 @@ class Resume_Creator:
             ]
             main_table.setStyle(main_table_style)
             self.data.append(main_table)
+        self.data.append(Spacer(1, 10))
         print("education")
 
     def add_header(self):
@@ -234,14 +262,17 @@ class Resume_Creator:
         print("header")
 
     def add_projects(self):
+        self.generate_heading("<b>PERSONAL PORJECTS</b>","project.png")
+        self.data.append(Spacer(1, 10))
         print("projects")
 
     def save_resume(self):
         self.add_header();
         self.add_summary();
         self.add_experience();
+        self.add_skills();
         self.add_education();
-        # self.add_skills();
+        self.add_projects()
         self.doc.build(self.data);
         with open(self.file_name + ".pdf", "wb") as f:
             f.write(self.pdf_buffer.getbuffer())
