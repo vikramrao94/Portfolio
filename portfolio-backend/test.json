@@ -75,5 +75,17 @@
         "Developed a system for cloud storage that uploads and store user collection."
       ]
     }
+  ],
+  "personal_projects":[
+    {
+      "project":"Portfolio Website",
+      "logo":"folder.png",
+      "link":"https://github.com/vikramrao94/Portfolio",
+      "skills_used":["React","Python","Javascript"],
+      "summary":[
+        "Redesigned and overhauled the monitor software from the ground up.",
+        "Designed and implemented automatic local database (scanner image database and sqlite database) updates that are separate from app updates."
+      ]
+    }
   ]
 }

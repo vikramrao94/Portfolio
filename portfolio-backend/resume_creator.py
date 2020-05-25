@@ -7,13 +7,14 @@ from reportlab.lib.enums import TA_JUSTIFY,TA_LEFT,TA_CENTER,TA_RIGHT
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch, mm
 from reportlab.lib.colors import HexColor
-from PIL import Image
 
 from line_generator import MCLine
 from image import HyperlinkedImage
 
-MARGIN_VERTICAL = 10
+MARGIN_VERTICAL = 5
 MARGIN_HORIZONTAL = 20
+HEADING_COLOR = HexColor("#6969e5")
+GENERAL_FONT_SIZE = 10
 
 class Resume_Creator:
 
@@ -35,7 +36,6 @@ class Resume_Creator:
         "indent":10
         };
         self.page_size = letter
-        # print("page size: ",self.page_size)
 
     def get_body_style(self,type,parameters):
         sample_style_sheet = getSampleStyleSheet();
@@ -75,7 +75,7 @@ class Resume_Creator:
     def generate_heading(self, title, image):
         body_style = self.get_body_style("Normal",{
         "fontSize": 12,
-        "textColor": HexColor("#ff8100")
+        "textColor": HEADING_COLOR
         });
         heading = [
             [
@@ -96,14 +96,13 @@ class Resume_Creator:
 
     def add_summary(self):
         self.generate_heading("<b>EXECUTIVE SUMMARY</b>","summary.png")
-        self.generate_bullet_points(10.5, self.input["executive_summary"])
+        self.generate_bullet_points(GENERAL_FONT_SIZE, self.input["executive_summary"])
         self.data.append(Spacer(1, 10))
-        print("summary")
 
     def add_experience(self):
         self.generate_heading("<b>EXPERIENCE</b>", "work.png")
         word_style = self.get_body_style("Normal", {
-        "fontSize":10.5,
+        "fontSize":GENERAL_FONT_SIZE,
         })
         for experience in self.input["experience"]:
             logo = [
@@ -111,23 +110,30 @@ class Resume_Creator:
                 HyperlinkedImage("images/" + experience["logo"],None, 20, 20)
                 ]
             ]
+            sub_title = ' | %s' % experience["sub_title"] if experience["sub_title"] != None else ''
             heading = [
                 [
-                Paragraph(experience["title"],word_style),
-                Paragraph(experience["company"],word_style),
-                self.generate_alignment_style("<b>%s</b>"%experience["duration"], TA_RIGHT, 10.5)
+                Paragraph("<b>%s</b>" % experience["title"] + sub_title ,word_style),
+                self.generate_alignment_style("<b>%s</b>"%experience["duration"], TA_RIGHT, GENERAL_FONT_SIZE)
+                ]
+            ]
+            sub_heading = [
+                [
+                Paragraph("<b>%s</b>" % experience["company"] + ' , %s' % experience["location"], word_style)
                 ]
             ]
             summary = [
                 [
-                    self.generate_bullet_points(10.5, experience["summary"],True)
+                    self.generate_bullet_points(GENERAL_FONT_SIZE, experience["summary"],True)
                 ]
             ]
-            heading_table = Table(heading,[120,100,298])
+            heading_table = Table(heading,[220,298])
             summary_table = Table(summary)
+            sub_heading_table = Table(sub_heading)
             combined_table = [
                 [
                     heading_table,
+                    sub_heading_table,
                     summary_table
                 ]
             ]
@@ -146,12 +152,11 @@ class Resume_Creator:
             self.data.append(main_table)
 
         self.data.append(Spacer(1, 10))
-        print("experience")
 
     def add_skills(self):
         self.generate_heading("<b>SKILLS</b>","code.png")
         word_style = self.get_body_style("Normal", {
-        "fontSize":10.5,
+        "fontSize":GENERAL_FONT_SIZE,
         })
         points = []
         for sub_skill in self.input["skills"]:
@@ -163,18 +168,17 @@ class Resume_Creator:
             list = list[:-2]
             points.append(list)
 
-        self.generate_bullet_points(10.5, points)
+        self.generate_bullet_points(GENERAL_FONT_SIZE, points)
         self.data.append(Spacer(1, 10))
-        print("skills")
 
     def add_education(self):
         self.generate_heading("<b>EDUCATION</b>","school.png")
         for education in self.input["education"]:
             word_style = self.get_body_style("Normal", {
-            "fontSize":10.5,
+            "fontSize":GENERAL_FONT_SIZE,
             })
             duration_style = self.get_body_style("Normal", {
-            "fontSize":10.5,
+            "fontSize":GENERAL_FONT_SIZE,
             "alignment":"right"
             })
             logo = [
@@ -197,7 +201,7 @@ class Resume_Creator:
             ]
             duration = [
                 [
-                    self.generate_alignment_style("<b>%s</b>"%education["duration"], TA_RIGHT, 10.5)
+                    self.generate_alignment_style("<b>%s</b>"%education["duration"], TA_RIGHT, GENERAL_FONT_SIZE)
                 ]
             ]
             logo_table = Table(logo)
@@ -218,17 +222,14 @@ class Resume_Creator:
             main_table.setStyle(main_table_style)
             self.data.append(main_table)
         self.data.append(Spacer(1, 10))
-        print("education")
 
     def add_header(self):
-        # print(self.input["heading"])
-        # img = Image.open('images/linkedin.png')
         name_style = self.get_body_style("Normal",{
         "fontSize": 24,
-        "textColor": HexColor("#ff8100")
+        "textColor": HEADING_COLOR
         });
         sub_heading_style = self.get_body_style("Normal", {
-        "fontSize": 10.5
+        "fontSize": GENERAL_FONT_SIZE
         })
         linkedin = HyperlinkedImage('images/linkedin.png', self.input["heading"]["linkedin"],25,20)
         github = HyperlinkedImage('images/github.png', self.input["heading"]["github"],20,20)
@@ -241,7 +242,7 @@ class Resume_Creator:
         heading_table = Table(heading)
         heading_table_style = [
             ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-            ('TEXTCOLOR', (0,0),(-1,0), HexColor("#ff8100"))
+            ('TEXTCOLOR', (0,0),(-1,-1), HEADING_COLOR)
         ]
         heading_table.setStyle(heading_table_style)
         self.data.append(heading_table)
@@ -259,12 +260,38 @@ class Resume_Creator:
         sub_heading_table.setStyle(sub_heading_table_style)
         self.data.append(sub_heading_table)
         self.data.append(Spacer(1, 10))
-        print("header")
 
     def add_projects(self):
         self.generate_heading("<b>PERSONAL PORJECTS</b>","project.png")
+        word_style = self.get_body_style("Normal", {
+        "fontSize":GENERAL_FONT_SIZE,
+        })
+        for project in self.input["personal_projects"]:
+            logo = [
+                [
+                HyperlinkedImage("images/" + project["logo"],project["link"], 20, 20)
+                ]
+            ]
+            summary = [
+                [
+                    self.generate_bullet_points(GENERAL_FONT_SIZE, project["summary"],True)
+                ]
+            ]
+            description = [[Paragraph("<b>%s</b>" % project["project"], word_style)],[Table(summary)]]
+            main = [
+                [
+                    Table(logo),
+                    Table(description)
+                ]
+            ]
+            main_table = Table(main, [30,530])
+            main_table_style = [
+                ('VALIGN', (0, 0), (0, 0), "MIDDLE"),
+            ]
+            main_table.setStyle(main_table_style)
+            self.data.append(main_table)
+
         self.data.append(Spacer(1, 10))
-        print("projects")
 
     def save_resume(self):
         self.add_header();
