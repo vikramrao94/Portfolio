@@ -46,8 +46,6 @@ class Resume_Creator:
                 body_style.fontSize = parameters[key]
             if key == "textColor":
                 body_style.textColor = parameters[key]
-            if key == "alignment":
-                body_style.alignment = parameters[key]
         if type == "Bullet":
             body_style.leftIndent = self.bullet_properties["indent"];
         return body_style;
@@ -176,10 +174,6 @@ class Resume_Creator:
         for education in self.input["education"]:
             word_style = self.get_body_style("Normal", {
             "fontSize":GENERAL_FONT_SIZE,
-            })
-            duration_style = self.get_body_style("Normal", {
-            "fontSize":GENERAL_FONT_SIZE,
-            "alignment":"right"
             })
             logo = [
                 [
