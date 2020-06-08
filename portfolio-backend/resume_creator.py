@@ -219,8 +219,7 @@ class Resume_Creator:
 
     def add_header(self):
         name_style = self.get_body_style("Normal",{
-        "fontSize": 24,
-        "textColor": HEADING_COLOR
+        "fontSize": 24
         });
         sub_heading_style = self.get_body_style("Normal", {
         "fontSize": GENERAL_FONT_SIZE
@@ -230,27 +229,27 @@ class Resume_Creator:
         personal_website = HyperlinkedImage('images/me.png', self.input["heading"]["website"],20,20)
         phone_image = HyperlinkedImage('images/phone.png', None, 20,20)
         address_image = HyperlinkedImage('images/address.png', None, 20, 20)
+        email_image = HyperlinkedImage('images/mail.png', None, 20, 20)
         heading = [
-            [Paragraph("<b>%s</b>" % self.input["heading"]["name"], name_style)],
+            [self.generate_alignment_style("<b>%s</b>" % self.input["heading"]["name"], TA_CENTER, 24)]
         ]
         heading_table = Table(heading)
         heading_table_style = [
-            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-            ('TEXTCOLOR', (0,0),(-1,-1), HEADING_COLOR)
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
         ]
         heading_table.setStyle(heading_table_style)
         self.data.append(heading_table)
         self.data.append(Spacer(1, 20))
         phone = Paragraph(self.input["heading"]["phone"], sub_heading_style)
         address = Paragraph(self.input["heading"]["address"],sub_heading_style)
+        email = Paragraph('<a href="mailto:%s"><font color="blue">%s</font></a>' % (self.input["heading"]["email"], self.input["heading"]["email"]), sub_heading_style)
         sub_heading = [
-        [phone_image ,phone ,address_image ,address, personal_website,linkedin, github]
+        [phone_image ,phone ,address_image ,address ,email_image, email, personal_website,linkedin, github]
         ]
         sub_heading_table_style = [
-            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-            ('ALIGN', (1, 1), (1, -1), 'LEFT')
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
         ]
-        sub_heading_table = Table(sub_heading,[25,100,25,312,25,25,25])
+        sub_heading_table = Table(sub_heading,[25,100,25,100,25,187,25,25,25])
         sub_heading_table.setStyle(sub_heading_table_style)
         self.data.append(sub_heading_table)
         self.data.append(Spacer(1, 10))
