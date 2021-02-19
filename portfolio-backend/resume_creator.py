@@ -1,4 +1,6 @@
 import json
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from io import BytesIO
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, A4
@@ -16,6 +18,36 @@ MARGIN_HORIZONTAL = 20
 HEADING_COLOR = HexColor("#6969e5")
 GENERAL_FONT_SIZE = 10
 
+def convert_differnce_to_string(difference):
+    years = difference.years
+    months = difference.months
+    string = "";
+    if years != 0:
+        string += '%s Years' % years if years > 1 else '%s Year' % years;
+    if months != 0:
+        string += ' %s Months' % months if months > 1 else ' %s Month' % months;
+    return string.strip();
+
+def get_difference_between_dates(date_range, get_raw = False):
+    date_array = [];
+    for date_string in date_range.split("-"):
+        if date_string.strip() != "Present":
+            date_array.append(datetime.strptime(date_string.strip(), "%B %d %Y"))
+        else:
+            date_array.append(datetime.now())
+    difference = relativedelta(date_array[1], date_array[0])
+    if get_raw:
+        return difference
+
+    add_strix = "*" if "Present" in date_range else ""
+    return convert_differnce_to_string(difference) + add_strix
+
+def myFirstPage(canvas, doc):
+    canvas.saveState()
+    canvas.setFontSize(10)
+    canvas.drawString(letter[0]-128, 25, "*As of %s" % datetime.strftime(datetime.now(), "%m/%d/%Y"))
+    canvas.restoreState()
+
 class Resume_Creator:
 
     def __init__(self, file_name, input):
@@ -26,7 +58,7 @@ class Resume_Creator:
                     rightMargin = MARGIN_HORIZONTAL,
                     leftMargin = MARGIN_HORIZONTAL,
                     topMargin = MARGIN_VERTICAL,
-                    bottomMargin = MARGIN_VERTICAL
+                    bottomMargin = MARGIN_VERTICAL,
                     );
         self.file_name = file_name;
         self.data = [];
@@ -94,6 +126,12 @@ class Resume_Creator:
 
     def add_summary(self):
         self.generate_heading("<b>EXECUTIVE SUMMARY</b>","summary.png")
+        total = relativedelta()
+        for experience in self.input["experience"]:
+            total += get_difference_between_dates(experience["exact_duration"], True)
+        summary_point = self.input["executive_summary"][0].split("%");
+        exp = " (<i>%s of dev experience*</i>) " % convert_differnce_to_string(total)
+        self.input["executive_summary"][0] = summary_point[0].strip() + exp + summary_point[1].strip()
         self.generate_bullet_points(GENERAL_FONT_SIZE, self.input["executive_summary"])
         self.data.append(Spacer(1, 10))
 
@@ -112,12 +150,13 @@ class Resume_Creator:
             heading = [
                 [
                 Paragraph("<b>%s</b>" % experience["title"] + sub_title ,word_style),
-                self.generate_alignment_style("<b>%s</b>"%experience["duration"], TA_RIGHT, GENERAL_FONT_SIZE)
+                self.generate_alignment_style("<b>%s</b>" % experience["duration"], TA_RIGHT, GENERAL_FONT_SIZE)
                 ]
             ]
             sub_heading = [
                 [
-                Paragraph("<b>%s</b>" % experience["company"] + ' , %s' % experience["location"], word_style)
+                Paragraph("<b>%s</b>" % experience["company"] + ' , %s' % experience["location"], word_style),
+                self.generate_alignment_style('<b>(%s)</b>' % get_difference_between_dates(experience["exact_duration"]), TA_RIGHT, GENERAL_FONT_SIZE)
                 ]
             ]
             summary = [
@@ -160,7 +199,7 @@ class Resume_Creator:
         for sub_skill in self.input["skills"]:
             list = "<b>%s :</b> " % sub_skill["key"]
             for skill in sub_skill["most_used"]:
-                list += "<i>%s</i>, " % skill
+                list += '<font color = "red"><b><i>%s</i></b></font>, ' % skill
             for skill in sub_skill["list"]:
                 list += "%s, " % skill
             list = list[:-2]
@@ -244,7 +283,7 @@ class Resume_Creator:
         address = Paragraph(self.input["heading"]["address"],sub_heading_style)
         email = Paragraph('<a href="mailto:%s"><font color="blue">%s</font></a>' % (self.input["heading"]["email"], self.input["heading"]["email"]), sub_heading_style)
         sub_heading = [
-        [phone_image ,phone ,address_image ,address ,email_image, email, personal_website,linkedin, github]
+        [phone_image ,phone ,address_image ,address ,email_image, email,linkedin, github]
         ]
         sub_heading_table_style = [
             ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
@@ -292,8 +331,8 @@ class Resume_Creator:
         self.add_experience();
         self.add_skills();
         self.add_education();
-        self.add_projects()
-        self.doc.build(self.data);
+        # self.add_projects()
+        self.doc.build(self.data, onFirstPage = myFirstPage);
         with open(self.file_name + ".pdf", "wb") as f:
             f.write(self.pdf_buffer.getbuffer())
             self.pdf_buffer.close();

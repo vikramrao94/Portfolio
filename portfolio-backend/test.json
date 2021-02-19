@@ -2,32 +2,51 @@
   "heading":{
     "name":"Vikram Rao",
     "phone":"+1 (407)-910-8680",
-    "email":"vikramrao512@gmail.com",
+    "email":"vikramrao512@outlook.com",
     "linkedin": "https://www.linkedin.com/in/vikramrao94706/",
     "website": "https://www.vikramrao.me",
     "github": "https://github.com/vikramrao94",
     "address":"Washington DC"
   },
   "executive_summary":[
-    "Highly adaptable software engineer and a generalist with a diverse tech stack from front-end to computer vision and back end development.",
-    "Proficient in leveraging web and cross platform development tools for mobile and desktop applications.",
-    "A divergent thinker with the temperament to assimilate recent technologies and frameworks. "
+    "Frontend focused Software Developer % with profiency in leveraging web and cross platform development tools (React ecosystem) for web and mobile applications.",
+    "A divergent thinker with the temperament to assimilate recent technologies and frameworks to solve real world problems. "
   ],
   "skills":[
     {
       "key":"Programming languages",
-      "list":["C", "C++", "Swift", "Objective-C", "SQL", "Java", "HTML", "CSS", "Ruby"],
-      "most_used":["Javascript","Python"]
+      "list":["Python", "SQL"],
+      "most_used":["Javascript ES6"]
     },
     {
-      "key":"Web Development",
-      "list":["Ruby on Rails", "REST APIs", "Node.js", "Express", "Firebase", "AWS Lambda", "Flask", "GraphQL", "PostgreSQL"],
-      "most_used":["React","Redux", "REST APIs"]
+      "key":"Frontend Web Development Tools",
+      "list":[],
+      "most_used":["React.js","HTML","CSS", "NPM"]
     },
     {
-      "key":"Mobile Development",
-      "list":["XCode", "Android Studio", "SQLite"],
+      "key":"Mobile App Development Tools",
+      "list":["XCode", "Android Studio"],
       "most_used":["React Native"]
+    },
+    {
+      "key":"Frontend State Management Tools",
+      "list":[],
+      "most_used":["Redux"]
+    },
+    {
+      "key":"UI/UX Design Tools",
+      "list":[],
+      "most_used":["Figma"]
+    },
+    {
+      "key":"Backend Development Tools",
+      "list":["Ruby on Rails","Node.js", "Express", "Firebase","GraphQL"],
+      "most_used":["REST APIs"]
+    },
+    {
+      "key":"Ancillary Tools/Methodoligies",
+      "list":["GitLab"],
+      "most_used":["Agile","Jira","Google Analytics", "Git", "Confluence"]
     }
   ],
   "education":[
@@ -52,27 +71,32 @@
     {
       "company":"Devtech systems",
       "duration":"March 2020 - Present",
+      "exact_duration":"March 2 2020 - Present",
       "logo":"devtech.png",
       "title":"Frontend Engineer",
       "sub_title":null,
       "location":"Washington DC",
       "summary":[
-        "Redesigned and overhauled the monitor software from the ground up.",
-        "Designed and implemented automatic local database (scanner image database and sqlite database) updates that are separate from app updates.",
-        "Created the search page UI for the website with integration to the backend for fetching the search results."
+        "Designed, developed, and delivered frontend code to support new features and enhancements for government decision support data analytics application in an agile environment.",
+        "Translated high level requirements to wireframes, mockups and designing frontend architecture.",
+        "Collabrated and designed on RESTful API endpoints driven by frontend needs.",
+        "<b>Tech Stack Utilized: </b> <i>React.js, React Hooks, React-Redux, React Router, Ruby On Rails, Capybara (For UX/UI and integration tests), AWS</i>"
       ]
     },
     {
       "company":"Varathon",
       "duration":"July 2018 - October 2019",
+      "exact_duration":"July 1 2018 - October 31 2019",
       "logo":"yugipal.png",
-      "title":"Full-stack Engineer",
+      "title":"Full Stack Engineer",
       "sub_title":"Co-Founder",
-      "location":"Berkeley",
+      "location":"San Fransisco",
       "summary":[
-        "Developed the scanning technology from scratch using the OpenCV framework with an accuracy of 95% over 15000 image artworks.",
-        "Integrated pricing API into the app for daily and automated pricing.",
-        "Developed a system for cloud storage that uploads and store user collection."
+        "Co-founded start up which provides customers with a mobile app (iOS and Android) that allows them to store their Tradable Card collection (YuGiOh Tradable Cards).",
+        "Designed, developed and delivered various features and enhancements towards the application.",
+        "Designed and architected a product recognition algorithm and its associated image database primarly for Tradable Card detection on iOS and Android devices.",
+        "Developed and implemented automated data gathering and harvesting tools for image processing and database dumps.",
+        "<b>Tech Stack Utilized: </b> <i>React.js , React Native, React-Redux, OpenCV, SQLite, XCode, Andriod Studio, AWS, Firebase</i>"
       ]
     }
   ],
