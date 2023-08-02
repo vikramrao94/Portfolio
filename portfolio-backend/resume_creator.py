@@ -16,11 +16,16 @@ from image import HyperlinkedImage
 MARGIN_VERTICAL = 5
 MARGIN_HORIZONTAL = 20
 HEADING_COLOR = HexColor("#6969e5")
-GENERAL_FONT_SIZE = 10
+GENERAL_FONT_SIZE = 8
+HEADING_FONT_SIZE = GENERAL_FONT_SIZE + 2
+NAME_FONT_SIZE = GENERAL_FONT_SIZE * 2
+SPACER_VALUE = 5
+FOOTER_FONT_SIZE = GENERAL_FONT_SIZE
 
 def convert_differnce_to_string(difference):
     years = difference.years
     months = difference.months
+    print (difference)
     string = "";
     if years != 0:
         string += '%s Years' % years if years > 1 else '%s Year' % years;
@@ -44,8 +49,8 @@ def get_difference_between_dates(date_range, get_raw = False):
 
 def myFirstPage(canvas, doc):
     canvas.saveState()
-    canvas.setFontSize(10)
-    canvas.drawString(letter[0]-128, 25, "*As of %s" % datetime.strftime(datetime.now(), "%m/%d/%Y"))
+    canvas.setFontSize(FOOTER_FONT_SIZE)
+    canvas.drawString(letter[0]-110, 25, "*As of %s" % datetime.strftime(datetime.now(), "%m/%d/%Y"))
     canvas.restoreState()
 
 class Resume_Creator:
@@ -104,7 +109,7 @@ class Resume_Creator:
 
     def generate_heading(self, title, image):
         body_style = self.get_body_style("Normal",{
-        "fontSize": 12,
+        "fontSize": HEADING_FONT_SIZE,
         "textColor": HEADING_COLOR
         });
         heading = [
@@ -130,13 +135,13 @@ class Resume_Creator:
         for experience in self.input["experience"]:
             total += get_difference_between_dates(experience["exact_duration"], True)
         summary_point = self.input["executive_summary"][0].split("%");
-        exp = " (<i>%s of dev experience*</i>) " % convert_differnce_to_string(total)
+        exp = " (<i>%s of development experience*</i>) " % convert_differnce_to_string(total)
         self.input["executive_summary"][0] = summary_point[0].strip() + exp + summary_point[1].strip()
         self.generate_bullet_points(GENERAL_FONT_SIZE, self.input["executive_summary"])
-        self.data.append(Spacer(1, 10))
+        self.data.append(Spacer(1, SPACER_VALUE))
 
     def add_experience(self):
-        self.generate_heading("<b>EXPERIENCE</b>", "work.png")
+        self.generate_heading("<b>WORK EXPERIENCE</b>", "work.png")
         word_style = self.get_body_style("Normal", {
         "fontSize":GENERAL_FONT_SIZE,
         })
@@ -188,7 +193,7 @@ class Resume_Creator:
             main_table.setStyle(main_table_style)
             self.data.append(main_table)
 
-        self.data.append(Spacer(1, 10))
+        self.data.append(Spacer(1, SPACER_VALUE))
 
     def add_skills(self):
         self.generate_heading("<b>SKILLS</b>","code.png")
@@ -206,7 +211,7 @@ class Resume_Creator:
             points.append(list)
 
         self.generate_bullet_points(GENERAL_FONT_SIZE, points)
-        self.data.append(Spacer(1, 10))
+        self.data.append(Spacer(1, SPACER_VALUE))
 
     def add_education(self):
         self.generate_heading("<b>EDUCATION</b>","school.png")
@@ -254,11 +259,11 @@ class Resume_Creator:
             ]
             main_table.setStyle(main_table_style)
             self.data.append(main_table)
-        self.data.append(Spacer(1, 10))
+        self.data.append(Spacer(1, SPACER_VALUE))
 
     def add_header(self):
         name_style = self.get_body_style("Normal",{
-        "fontSize": 24
+        "fontSize": NAME_FONT_SIZE
         });
         sub_heading_style = self.get_body_style("Normal", {
         "fontSize": GENERAL_FONT_SIZE
@@ -269,16 +274,18 @@ class Resume_Creator:
         phone_image = HyperlinkedImage('images/phone.png', None, 20,20)
         address_image = HyperlinkedImage('images/address.png', None, 20, 20)
         email_image = HyperlinkedImage('images/mail.png', None, 20, 20)
+        profile_picture = HyperlinkedImage('images/profilepic.png', None, 40, 40)
         heading = [
-            [self.generate_alignment_style("<b>%s</b>" % self.input["heading"]["name"], TA_CENTER, 24)]
+            [self.generate_alignment_style("<b>%s</b>" % self.input["heading"]["name"], TA_LEFT, NAME_FONT_SIZE)]
         ]
         heading_table = Table(heading)
         heading_table_style = [
             ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
         ]
         heading_table.setStyle(heading_table_style)
-        self.data.append(heading_table)
-        self.data.append(Spacer(1, 20))
+        sub_data = []
+        sub_data.append(heading_table)
+        sub_data.append(Spacer(1, 10))
         phone = Paragraph(self.input["heading"]["phone"], sub_heading_style)
         address = Paragraph(self.input["heading"]["address"],sub_heading_style)
         email = Paragraph('<a href="mailto:%s"><font color="blue">%s</font></a>' % (self.input["heading"]["email"], self.input["heading"]["email"]), sub_heading_style)
@@ -290,8 +297,20 @@ class Resume_Creator:
         ]
         sub_heading_table = Table(sub_heading,[25,100,25,100,25,187,25,25,25])
         sub_heading_table.setStyle(sub_heading_table_style)
-        self.data.append(sub_heading_table)
-        self.data.append(Spacer(1, 10))
+        sub_data.append(sub_heading_table)
+        full_data = [
+            [
+                profile_picture,
+                sub_data
+            ]
+        ]
+        full_data_table = Table(full_data)
+        full_data_table_style = [
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
+        ]
+        full_data_table.setStyle(full_data_table_style)
+        self.data.append(full_data_table)
+        self.data.append(Spacer(1, SPACER_VALUE))
 
     def add_projects(self):
         self.generate_heading("<b>PERSONAL PORJECTS</b>","project.png")
@@ -323,7 +342,12 @@ class Resume_Creator:
             main_table.setStyle(main_table_style)
             self.data.append(main_table)
 
-        self.data.append(Spacer(1, 10))
+        self.data.append(Spacer(1, SPACER_VALUE))
+
+    def add_hobbies(self):
+        self.generate_heading("<b>HOBBIES</b>","hobby.png")
+        self.generate_bullet_points(GENERAL_FONT_SIZE, self.input["hobbies"])
+        # self.data.append(Spacer(1, 10))
 
     def save_resume(self):
         self.add_header();
@@ -331,6 +355,7 @@ class Resume_Creator:
         self.add_experience();
         self.add_skills();
         self.add_education();
+        self.add_hobbies();
         # self.add_projects()
         self.doc.build(self.data, onFirstPage = myFirstPage);
         with open(self.file_name + ".pdf", "wb") as f:

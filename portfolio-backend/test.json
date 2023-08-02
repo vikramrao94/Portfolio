@@ -2,25 +2,25 @@
   "heading":{
     "name":"Vikram Rao",
     "phone":"+1 (407)-910-8680",
-    "email":"vikramrao512@outlook.com",
+    "email":"vikramrao2512@outlook.com",
     "linkedin": "https://www.linkedin.com/in/vikramrao94706/",
     "website": "https://www.vikramrao.me",
     "github": "https://github.com/vikramrao94",
-    "address":"Washington DC"
+    "address":"Washington DC (Open to relocation)"
   },
   "executive_summary":[
-    "Frontend focused Software Developer % with profiency in leveraging web and cross platform development tools (React ecosystem) for web and mobile applications.",
+    "Frontend focused Software Developer % with proficiency in leveraging cross platform development tools (React ecosystem) for web and mobile applications.",
     "A divergent thinker with the temperament to assimilate recent technologies and frameworks to solve real world problems. "
   ],
   "skills":[
     {
-      "key":"Programming languages",
+      "key":"Programming Language",
       "list":["Python", "SQL"],
       "most_used":["Javascript ES6"]
     },
     {
       "key":"Frontend Web Development Tools",
-      "list":[],
+      "list":["Webpack"],
       "most_used":["React.js","HTML","CSS", "NPM"]
     },
     {
@@ -69,18 +69,19 @@
   ],
   "experience":[
     {
-      "company":"Devtech systems",
-      "duration":"March 2020 - Present",
-      "exact_duration":"March 2 2020 - Present",
+      "company":"DevTech Systems",
+      "duration":"March 2020 - May 2021",
+      "exact_duration":"March 1 2020 - May 6 2021",
       "logo":"devtech.png",
+      "link":"https://usaidnigeriaprs.com",
       "title":"Frontend Engineer",
       "sub_title":null,
       "location":"Washington DC",
       "summary":[
-        "Designed, developed, and delivered frontend code to support new features and enhancements for government decision support data analytics application in an agile environment.",
-        "Translated high level requirements to wireframes, mockups and designing frontend architecture.",
-        "Collabrated and designed on RESTful API endpoints driven by frontend needs.",
-        "<b>Tech Stack Utilized: </b> <i>React.js, React Hooks, React-Redux, React Router, Ruby On Rails, Capybara (For UX/UI and integration tests), AWS</i>"
+        "Improved longevity and frontend/end-user useability of <link href = \"https://usaidnigeriaprs.com\"><font color=\"blue\">Monitor (Government Data Reporting Platform)</font></link> by designing, developing and delivering new features, enhancements and bug fixes.",
+        "Fully revamped the way data entry works for the platform with a complete architecture and UI/UX overhaul (from designing user flow and user experience to implementation) resulting in a much more user-friendly and streamlined data entry process.",
+        "Mentored, trained and onboarded new team member into the frontend codebase and framework effectively cutting down on time and getting up to speed on the product for swift contributions.",
+        "<b>Tech Stack: </b> <i>React.js, React Hooks, React-Redux, React Router, Ruby On Rails, Capybara (For UI/UX and integration tests), AWS, Docker</i>"
       ]
     },
     {
@@ -88,15 +89,16 @@
       "duration":"July 2018 - October 2019",
       "exact_duration":"July 1 2018 - October 31 2019",
       "logo":"yugipal.png",
+      "link":"https://www.youtube.com/watch?v=NzvBsUQzI_g",
       "title":"Full Stack Engineer",
       "sub_title":"Co-Founder",
       "location":"San Fransisco",
       "summary":[
-        "Co-founded start up which provides customers with a mobile app (iOS and Android) that allows them to store their Tradable Card collection (YuGiOh Tradable Cards).",
-        "Designed, developed and delivered various features and enhancements towards the application.",
-        "Designed and architected a product recognition algorithm and its associated image database primarly for Tradable Card detection on iOS and Android devices.",
-        "Developed and implemented automated data gathering and harvesting tools for image processing and database dumps.",
-        "<b>Tech Stack Utilized: </b> <i>React.js , React Native, React-Redux, OpenCV, SQLite, XCode, Andriod Studio, AWS, Firebase</i>"
+        "Co-founded start up which provides customers with a mobile app (<link href = \"https://www.youtube.com/watch?v=NzvBsUQzI_g\"><font color=\"blue\">iOS</font></link> and <link href=\"https://play.google.com/store/apps/details?id=com.yugipal&hl=en_US&gl=US\"><font color=\"blue\">Android</font></link>) that allows them to store their Tradable Card collection.",
+        "Learnt the ropes of product and software development lifecycle by designing and implementing various features, enhancements and bug fixes across the tech stack.",
+        "Designed and architected a product recognition algorithm and its associated image database primarly for Tradable Card detection on iOS and Android devices resulting in a faster onboarding of a user's card collection.",
+        "Significantly minimized manual work by developing and implementing automated data gathering and harvesting tools for image processing and database dumps.",
+        "<b>Tech Stack: </b> <i>React.js , React Native, React-Redux, OpenCV, SQLite, XCode, Andriod Studio, AWS, Firebase</i>"
       ]
     }
   ],
@@ -111,5 +113,8 @@
         "Designed and implemented automatic local database (scanner image database and sqlite database) updates that are separate from app updates."
       ]
     }
+  ],
+  "hobbies":[
+    "Avid onewheeler (single wheel electric skateboard) and a youtube content creator."
   ]
 }
